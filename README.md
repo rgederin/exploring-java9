@@ -1,9 +1,17 @@
-##Streams improvements
+## Streams improvements
+
+Stream interface has 4 new methods:
+
+ * Stream::takeWhile
+ * Stream::dropWhile
+ * Stream::iterate
+ * Stream::ofNullable
+
 
 **Stream::takeWhile**
 
 ```
-Stream<T> takeWhile(Predicate<? super T> predicate);
+static<T> Stream<T> takeWhile(Predicate<? super T> predicate);
 ```
 
 Called on an ordered stream it will return a new one that consists of those element that passed the predicate until the first one failed. It’s a little like filter but it cuts the stream off as soon as the first element fails the predicate. In its parlance, it takes elements from the stream while the predicate holds and stops as soon as it no longer does.
@@ -21,7 +29,7 @@ The real advantage to takeWhile is that it is a short-circuiting operation. If y
 **Stream::dropWhile**
 
 ```
-Stream<T> dropWhile(Predicate<? super T> predicate);
+static<T> Stream<T> dropWhile(Predicate<? super T> predicate);
 ```
 
 It does just the opposite of takeWhile: Called on an ordered stream it will return a new one that consists of the first element that failed the predicate and all following ones. Or, closer to its name, it drops elements while the predicate holds and returns the rest.
@@ -34,3 +42,47 @@ List<String> strings = Stream.of("this is a list of strings".split(" "))
 System.out.println(strings);//of list
 ```
 
+**Stream::iterate**
+
+```
+static<T> Stream<T> iterate(T seed, Predicate<? super T> hasNext, UnaryOperator<T> next)
+```
+
+The new overloaded version of iterate takes a Predicate as the second argument. The values are produced by starting with the seed and then applying the unary operator as long as the values satisfy the hasNext predicate.
+
+```
+bigDecimals = Stream.iterate(BigDecimal.ZERO, bd -> bd.longValue() < 10L, bd -> bd.add(BigDecimal.ONE))
+                .collect(Collectors.toList());
+
+System.out.println(bigDecimals);
+
+//Could be used as traditional for loop
+Stream.iterate(1, i -> i <= 10, i -> 2 * i)
+           .forEach(System.out::println);
+```
+
+**Stream::ofNullable**
+
+```
+static<T> Stream<T> ofNullable(T t)
+```
+
+Stream::ofNullable creates a stream of either zero or one element, depending on whether the parameter passed to the method was null or not.
+
+```
+ long one = Stream.ofNullable("Ruslan").count();
+ long zero = Stream.ofNullable(null).count();
+```
+
+This method simplify stream creation from objects which may be null
+
+```
+
+// findCustomer can return null
+Customer customer = findCustomer(customerId);
+
+Stream.ofNullable(customer)
+	.flatMap(Customer::streamOrders)
+	. // do something with stream of orders
+
+```
