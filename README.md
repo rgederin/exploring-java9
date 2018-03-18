@@ -86,3 +86,56 @@ Stream.ofNullable(customer)
 	. // do something with stream of orders
 
 ```
+
+## Optional improvements
+
+Optional class was extended by three methods
+
+ * Optional::or
+ * Optional::stream
+ * Optional::ifPresentOrElse
+
+**Optional::or**
+
+```
+Optional<T> or(Supplier<? extends Optional<? extends T>> supplier)
+```
+
+If a value is present, this method returns an Optional describing it. Otherwise it invokes the Supplier and returns the Optional it returns.
+
+```
+Optional<Customer> customer = findByIdLocal(id)
+                .or(() -> findByIdRemote(id))
+                .or(() -> Optional.of(Customer.DEFAULT));
+```
+
+**Optional::stream**
+
+```
+Stream<T> stream()
+```
+
+If a value is present, this method returns a sequential, single element stream contain‐ ing only that value. Otherwise it returns an empty stream.
+This method means that a stream of optional customers can be turned into a stream of customers directly.
+
+```
+List<Customer> allCustomersByGivenIds = Arrays.stream(ids)
+                .map(Java9Optionals::findById)
+                .flatMap(Optional::stream) //using new Optional::stream
+                .collect(Collectors.toList());
+```
+
+**Optional::ifPresentOrElse**
+
+```
+void ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction)
+```
+
+The ifPresent method on Optional executes a Consumer if the Optional is not empty.
+
+The new ifPresentOrElse method takes a second, Runnable, argument that is executed if the Optional is empty. To use it, simply provide a lambda that takes no arguments and returns void.
+
+```
+findByIdLocal(id).ifPresentOrElse(System.out::println,
+                () -> System.out.println("Customer with id=" + id + " not found"));
+```
