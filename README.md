@@ -180,3 +180,46 @@ Java 7 introduced the @SafeVarargs annotation to final, static methods, and cons
 Java 7 introduced the diamond operator ( <> ) in generic class instantiation contexts.
 
 But in Java 7, we cannot use the diamond operator in anonymous classes. Java 9 enhanced the type inference algorithm to tell whether the inferred type is denotable when analyzing an anonymous class that supports the diamond operator.
+
+## Collections improvement
+
+Java 9 has created factory methods for creating immutable Lists, Sets, Maps, and Map.Entry Objects. These utility methods are used to create empty or non-empty collection objects.
+
+**Characteristics of these utility methods**
+
+* These methods are immutable. We cannot add or delete or update the elements in the collection. If we try to add or delete or update the elements, it throws an unsupportedOperationException.
+* It doesn't allow null values. If we try to add null values to any collection, then it throws a null pointer exception.
+* They are serializable if all the elements are serializable.
+
+**Examples**
+
+List: (with values and an empty List)
+
+```
+List<String> list= List.of("apple","bat");
+List<String> list= List.of();
+```
+
+Set: (with values and an empty Set)
+
+```
+Set<String> set= Set.of("apple","bat");
+Set<String> set= Set.of();
+```
+
+Map: (with values and an empty Map)
+
+```
+Map<Integer,String> emptyMap = Map.of()
+Map<Integer,String> map = Map.of(1, "Apple", 2, "Bat", 3, "Cat")
+```
+
+Map.Entry: (with values and an empty Map Entry)
+
+```
+Map<Integer,String> emptyEntry = Map.ofEntries()
+Map.Entry<Integer,String> mapEntry1 = Map.entry(1,"Apple")
+Map.Entry<Integer,String> mapEntry2 = Map.entry(2,"Bat")
+Map.Entry<Integer,String> mapEntry3 = Map.entry(3,"Cat")
+Map<Integer,String> mapEntry = Map.ofEntries(mapEntry1,mapEntry2,mapEntry3)
+```
