@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 /**
  * Stream::ofNullable
  * Stream::iterate
- * Stream::takesWhile
+ * Stream::takeWhile
  * Stream::dropWhile
  */
 public class Java9Streams {
@@ -16,7 +16,7 @@ public class Java9Streams {
     public static void main(String[] args) {
         ofNullable();
         iterate();
-        takesWhile();
+        takeWhile();
         dropWhile();
     }
 
@@ -61,7 +61,7 @@ public class Java9Streams {
      * <p>
      * It’s a little like filter but it cuts the stream off as soon as the first element fails the predicate.
      */
-    private static void takesWhile() {
+    private static void takeWhile() {
         List<String> strings = Stream.of("this is a list of strings".split(" "))
                 .takeWhile(s -> !s.equals("of"))
                 .collect(Collectors.toList());

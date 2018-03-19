@@ -139,3 +139,44 @@ The new ifPresentOrElse method takes a second, Runnable, argument that is execut
 findByIdLocal(id).ifPresentOrElse(System.out::println,
                 () -> System.out.println("Customer with id=" + id + " not found"));
 ```
+
+## Milling Project Coin
+
+Milling Project Coin has five small amendments to the Java programming language:
+
+ * Removal underscore as an identifier name
+ * Effectively final in try-with-resources
+ * Private methods in the interface
+ * SafeVarargs to support private methods
+ * Diamond operators with anonymous classes
+
+**Removal underscore as an identifier name**
+
+In Java 8, an underscore ( _ ) is allowed as an identifier name, but the compiler will show a warning that "It will not be supported after Java SE 8." So Java 9 completed the removal of underscore from the set of legal identifier names.
+
+The underscore will be used as a keyword for an unnamed lambda parameter in future Java releases (JEP 302).That's the reason the compiler stated "_" is a keyword while compiling the Java file.
+
+**Effectively final in try-with-resources**
+
+Java 7 introduced the try-with-resources statement, where resources will be closed automatically after the execution. It requires an additional variable for the resources to be assigned. But Java 9 manages the same with the final or effectively final variables. The effectively final variable is the variable or the parameter whose values will never be changed once it is initialized.
+
+```
+InputStream inputStream = new FileInputStream("test.txt");
+try (inputStream) {} catch (IOException e) {}
+```
+
+**Private methods in the interface**
+
+In Java 8, we can use Interface with static and default methods. Meanwhile, Java 9 will introduce Interface implementations with private methods.
+
+The private method can be accessed only within that Interface.
+
+**SafeVarargs to support private methods**
+
+Java 7 introduced the @SafeVarargs annotation to final, static methods, and constructors. Java 9 extends this functionality to use for private methods, too.
+
+**Diamond operators with anonymous classes**
+
+Java 7 introduced the diamond operator ( <> ) in generic class instantiation contexts.
+
+But in Java 7, we cannot use the diamond operator in anonymous classes. Java 9 enhanced the type inference algorithm to tell whether the inferred type is denotable when analyzing an anonymous class that supports the diamond operator.
