@@ -1,3 +1,12 @@
+## JShell
+
+JShell is a REPL (Read-Eval-Print-Loop) tool that allows snippets of code to be run without having to place them in classes. It is similar to what exists in other JVM-based languages such as Groovy or Scala. It allows facilitate quick prototyping of new code without having to compile and run and without having to open an IDE.
+
+In addition to the command line tool, JShell comes with an API to allow other tools to integrate JShell's functionality.
+
+Some rules such as ending statements with semi-colons and checked exceptions are relaxed. You can even declare variables of some type that you define after declaring the variable. The class path and module path can also be changed during the session, or when starting JShell the first time
+
+
 ## Streams improvements
 
 Stream interface has 4 new methods:
@@ -154,7 +163,7 @@ Milling Project Coin has five small amendments to the Java programming language:
 
 In Java 8, an underscore ( _ ) is allowed as an identifier name, but the compiler will show a warning that "It will not be supported after Java SE 8." So Java 9 completed the removal of underscore from the set of legal identifier names.
 
-The underscore will be used as a keyword for an unnamed lambda parameter in future Java releases (JEP 302).That's the reason the compiler stated "_" is a keyword while compiling the Java file.
+The underscore will be used as a keyword for an unnamed lambda parameter in future Java releases (JEP 302).That's the reason the compiler stated _ is a keyword while compiling the Java file.
 
 **Effectively final in try-with-resources**
 
@@ -244,7 +253,7 @@ Reactive Streams is a standard for asynchronous stream processing with non-block
 
 To build a Flow, we can use three main abstractions and compose them into asynchronous processing logic.
 
-**Every Flow needs to process events that are published to it by a Publisher instance*; the Publisher has one method – subscribe(). If any of the subscribers want to receive events published by it, they need to subscribe to the given Publisher.
+**Every Flow needs to process events that are published to it by a Publisher instance**; the Publisher has one method – subscribe(). If any of the subscribers want to receive events published by it, they need to subscribe to the given Publisher.
 
 **The receiver of messages needs to implement the Subscriber interface.** Typically this is the end for every Flow processing because the instance of it does not send messages further.
 We can think about Subscriber as a Sink. This has four methods that need to be overridden – onSubscribe(), onNext(), onError(), and onComplete(). We’ll be looking at those in the next section.
@@ -252,6 +261,37 @@ We can think about Subscriber as a Sink. This has four methods that need to be o
 **If we want to transform incoming message and pass it further to the next Subscriber, we need to implement the Processor interface.** This acts both as a Subscriber because it receives messages, and as the Publisher because it processes those messages and sends them for further processing.
 
 [Deep dive into Java 9 Reactive Streams](http://www.baeldung.com/java-9-reactive-streams)
+
+## Changes in Java 9 with HTTP/2.0
+
+The original HTTP-handling API in Java was written back when HTTP/1.1 was a new, shiny thing. It was written to be agnostic, supporting many different types of connections using the same API. Over time, the uses of HTTP have evolved but the Java API has not kept pace with it. So for Java 9, a new API has been introduced that is cleaner and clearer to use and that also adds support for HTTP/2.
+
+The new API handles HTTP connections through three classes.
+
+* HttpClient handles the creation and sending of requests.
+* HttpRequest is used to construct a request to be sent via the HttpClient.
+* HttpResponse holds the response from the request that has been sent.
+
+The new API helps HTTP connections be more easily maintained. It's faster and allows for a more responsive application without the need for third-party libraries.
+
+```
+        try {
+            HttpClient httpClient = HttpClient.newHttpClient(); //Create a HttpClient
+            System.out.println(httpClient.version());
+            HttpRequest httpRequest = HttpRequest.newBuilder().uri(new URI("https://www.google.com/")).GET().build(); //Create a GET request for the given URI
+            Map < String, List < String >> headers = httpRequest.headers().map();
+            headers.forEach((k, v) - > System.out.println(k + "-" + v));
+            HttpResponse < String > httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandler.asString());
+        } catch (Exception e) {
+            System.out.println("message " + e);
+        }
+```
+
+Also we could perform in asynchronous way:
+
+```
+CompletableFuture > httpResponse = httpClient.sendAsync(httpRequest, HttpResponse.BodyHandler.asString());
+```
 
 ## Other Java 9 updates and improvements
 
