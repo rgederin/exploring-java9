@@ -1,5 +1,5 @@
 # Exploring Java 9
-Java 9 was released in the second half of 2017.The Java 9 release introduces more than 150 new features including the module system, which enables developers to scale down the Java SE platform for small devices, improves performance and security, and makes it easier to construct and maintain libraries and large applications.
+Java 9 was released in the second half of 2017. The Java 9 release introduces more than 150 new features including the module system, which enables developers to scale down the Java SE platform for small devices, improves performance and security, and makes it easier to construct and maintain libraries and large applications.
 
 In this repository I collected major changes and features in Java 9. Full list of Java 9 features you could find on [official web site](https://docs.oracle.com/javase/9/whatsnew/toc.htm#JSNEW-GUID-C23AFD78-C777-460B-8ACE-58BE5EA681F6).
 
