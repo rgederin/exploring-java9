@@ -1,3 +1,29 @@
+# Exploring Java 9
+Java 9 was released in the second half of 2017.The Java 9 release introduces more than 150 new features including the module system, which enables developers to scale down the Java SE platform for small devices, improves performance and security, and makes it easier to construct and maintain libraries and large applications.
+
+In this repository I collected major changes and features in Java 9. Full list of Java 9 features you could find on [official web site](https://docs.oracle.com/javase/9/whatsnew/toc.htm#JSNEW-GUID-C23AFD78-C777-460B-8ACE-58BE5EA681F6).
+
+Also this repo contains several code examples of new Java 9 features.
+
+## Java Platform Module System (JPMS)
+
+The Java Platform Module System (JPMS) brings modularization to Java and the JVM and it changes how we program in the large.
+Modularity is a way of writing and implementing a program as a number of unique modules. It avoids monolithic design, and it helps in reducing a system's complexity, minimizing coupling, and a few other features.
+
+**What modularity in Java 9 give us**
+
+**Reliable configuration** — Developers have long suffered with the brittle, error-prone class-path mechanism for configuring program components. The class path cannot express relationships between components, so if a necessary component is missing then that will not be discovered until an attempt is made to use it. The class path also allows classes in the same package to be loaded from different components, leading to unpredictable behavior and difficult-to-diagnose errors. The proposed specification will allow a component to declare that it depends upon other components, as other components depend upon it.
+
+**Strong encapsulation** — The access-control mechanism of the Java programming language and the Java virtual machine provides no way for a component to prevent other components from accessing its internal packages. The proposed specification will allow a component to declare which of its packages are accessible by other components, and which are not.
+
+**A scalable platform** — The ever-increasing size of the Java SE Platform has made it increasingly difficult to use in small devices despite the fact that many such devices are capable of running an SE-class Java virtual machine. The Compact Profiles introduced in Java SE 8 (JSR 337) help in this regard, but they are not nearly flexible enough. The proposed specification will allow the Java SE Platform, and its implementations, to be decomposed into a set of components which can be assembled by developers into custom configurations that contain only the functionality actually required by an application.
+
+**Greater platform integrity** — Casual use of APIs that are internal to Java SE Platform implementations is both a security risk and a maintenance burden. The strong encapsulation provided by the proposed specification will allow components that implement the Java SE Platform to prevent access to their internal APIs.
+
+**Improved performance** — Many ahead-of-time, whole-program optimization techniques can be more effective when it is known that a class can refer only to classes in a few other specific components rather than to any class loaded at run time. Performance is especially enhanced when the components of an application can be optimized in conjunction with the components that implement the Java SE Platform.
+
+There are a lot of information for this topic so you could find two great tutorials [here](https://blog.codefx.org/java/java-module-system-tutorial/) and [here](https://dzone.com/articles/java-9-modules-introduction-part-1)
+
 ## JShell
 
 JShell is a REPL (Read-Eval-Print-Loop) tool that allows snippets of code to be run without having to place them in classes. It is similar to what exists in other JVM-based languages such as Groovy or Scala. It allows facilitate quick prototyping of new code without having to compile and run and without having to open an IDE.
