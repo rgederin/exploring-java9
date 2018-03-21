@@ -223,3 +223,51 @@ Map.Entry<Integer,String> mapEntry2 = Map.entry(2,"Bat")
 Map.Entry<Integer,String> mapEntry3 = Map.entry(3,"Cat")
 Map<Integer,String> mapEntry = Map.ofEntries(mapEntry1,mapEntry2,mapEntry3)
 ```
+
+## Stack-Walking API
+
+The stack-walking API, released as part of Java 9, offers an efficient way to access the execution stack. (The execution stack represents the chain of method calls – it starts with the *public static void main(String[])* method or the run method of a thread, contains a frame for each method that was called but did not yet return, and ends at the execution point of the StackWalker call.)
+
+[Deep dive into stack-walking API](https://www.sitepoint.com/deep-dive-into-java-9s-stack-walking-api/)
+
+## Process API updates
+
+JEP 102: Process API Updates enhances the java.lang.Process class and introduces the java.lang.ProcessHandle interface with its nested Info interface to overcome limitations that often force developers to resort to native code; for example, to obtain the native process ID (PID).
+
+[Deep dive into process API](https://www.javaworld.com/article/3176874/java-language/java-9s-other-new-enhancements-part-3.html)
+
+## Reactive Stream Flow API
+
+Reactive Streams is a standard for asynchronous stream processing with non-blocking back pressure. This specification is defined in the Reactive Manifesto, and there are various implementations of it, for example, RxJava or Akka-Streams.
+
+**Reactive API Overview**
+
+To build a Flow, we can use three main abstractions and compose them into asynchronous processing logic.
+
+**Every Flow needs to process events that are published to it by a Publisher instance*; the Publisher has one method – subscribe(). If any of the subscribers want to receive events published by it, they need to subscribe to the given Publisher.
+
+**The receiver of messages needs to implement the Subscriber interface.** Typically this is the end for every Flow processing because the instance of it does not send messages further.
+We can think about Subscriber as a Sink. This has four methods that need to be overridden – onSubscribe(), onNext(), onError(), and onComplete(). We’ll be looking at those in the next section.
+
+**If we want to transform incoming message and pass it further to the next Subscriber, we need to implement the Processor interface.** This acts both as a Subscriber because it receives messages, and as the Publisher because it processes those messages and sends them for further processing.
+
+[Deep dive into Java 9 Reactive Streams](http://www.baeldung.com/java-9-reactive-streams)
+
+## Other Java 9 updates and improvements
+
+* New Doclet API - allowed client applications to customize the output of Javadocs
+* Applet API Deprecated
+* New Versioning Scheme
+* Javadoc Search and HTML5
+* G1 as Default Garbage Collector - Prior to Java 9, the default garbage collector was typically the Parallel GC on server VMs and the Serial GC on client ones. On Java 9, server VMs will use G1 as the default, which was introduced in Java 7. G1 is a parallel and low-pause garbage collector that works especially well for multi-core machines with big heap sizes.
+* New HotSpot Diagnostic Commands
+* Create PKCS12 Keystores by Default  - starting Java 9, keystores are created using the PKCS12 format instead of JKS because it offers stronger cryptographic algorithms.
+* Multi-Release JAR Files - allows bundling code targeting multiple Java releases within the same Jar file.
+* Remove the JVM TI hprof Agent
+* Remove the jhat Tool
+* Compile for Older Platform Versions
+* Multi-Resolution Images
+* Compact Strings - An internal optimization is applied to the String class to reduce memory consumption. The idea is that most String objects contain characters that do not need 2 bytes to represent.
+* Encapsulate Internal APIS
+* Enhanced Deprecation
+* Spin-Wait Hints
